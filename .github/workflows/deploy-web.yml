@@ -17,13 +17,17 @@ jobs:
         with:
           flutter-version: 'stable'
 
-      - run: flutter config --enable-web
+      - name: Enable web support
+        run: flutter config --enable-web
 
-      - run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-      - run: flutter build web --release
+      - name: Build web app
+        run: flutter build web --release --base-href="/flutter-bmi-calculator/"
 
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+          publish_dir: ./build/web/
