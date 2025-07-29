@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(),
+      home: const MyHomePage("BMI Calculator"),
     );
   }
 }
