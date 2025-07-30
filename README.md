@@ -1,16 +1,53 @@
 # bmi_calculator
 
-A new Flutter project.
+**My first Flutter project**
+## What I Learned
+
+- How to build a Flutter app for both web and mobile platforms.
+- Managing state and UI in Flutter with widgets.
+- Managing callback functions
+- integrating 3rd party libraries.
+- Working with the Dart language and Flutter’s widget tree structure.
+- Using GitHub Actions to automate building and deploying Flutter web apps to GitHub Pages.
+---
+
+## Web Demo
+
+Try the live demo here:  
+[https://hasan-uddin.github.io/flutter-bmi-calculator/](https://hasan-uddin.github.io/flutter-bmi-calculator/)
+
+---
+
+## Screenshots
+
+![App Screenshot 1](https://github.com/user-attachments/assets/ebec65f3-3f4b-48d0-90b7-418d54fbdfa8)  
+![App Screenshot 2](https://github.com/user-attachments/assets/12bc0b07-b47a-4e55-a2c0-8fb436ca0872)
+
+---
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run the project locally, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+1. **Clone the repository**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+   ```bash
+   git clone https://github.com/Hasan-Uddin/flutter-bmi-calculator.git
+   cd flutter-bmi-calculator
+2. **Install dependencies**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+   ```bash
+   flutter pub get
+3. **Run the app**
+
+   ```bash
+   flutter run
+
+1. **build**
+    - for web
+       ```bash
+       flutter build web
+    - for Android
+       ```bash
+       flutter build apk
+and so on...
