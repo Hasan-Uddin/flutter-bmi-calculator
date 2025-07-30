@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class age_widget extends StatefulWidget {
+class AgeWidget extends StatefulWidget {
   final Function(int) onChange;
-  const age_widget({super.key, required this.onChange});
+  const AgeWidget({super.key, required this.onChange});
 
   @override
-  State<age_widget> createState() => _age_widgetState();
+  State<AgeWidget> createState() => _AgeWidgetState();
 }
 
-class _age_widgetState extends State<age_widget> {
+class _AgeWidgetState extends State<AgeWidget> {
   int age = 25;
   int min = 21;
   int max = 120;

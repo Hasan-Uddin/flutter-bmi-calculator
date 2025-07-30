@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double height = 0;
   double weight = 0;
   double bmiScore = 0;
-  String result = "NaN";
+  String result = "";
   String msg = "";
   String errorMsg = "";
 
@@ -32,88 +32,96 @@ class _MyHomePageState extends State<MyHomePage> {
           "BMI Calculator",
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            child: Card(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Card(
               elevation: 10,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
                 children: [
-                  gender_widget(onChange: (val) {
-                    isMale = val;
+                  GenderWidget(onChange: (val) {
+                    setState(() {
+                      isMale = val;
+                    });
                   }),
-                  height_widget(
+                  HeightWidget(
                     onChange: (val) {
-                      height = val;
+                      setState(() {
+                        height = val;
+                      });
                     },
                   ),
-                  weight_widget(
+                  WeightWidget(
                     onChange: (val) {
-                      weight = val;
+                      setState(() {
+                        weight = val;
+                      });
                     },
                   ),
-                  age_widget(
+                  AgeWidget(
                     onChange: (val) {
-                      age = val;
+                      setState(() {
+                        age = val;
+                      });
                     },
                   ),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                elevation: 10,
-                minimumSize: Size(150, 50),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  elevation: 10,
+                  minimumSize: Size(150, 50),
+                ),
+                child: isLoading
+                    ? SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 3,
+                          padding: EdgeInsets.all(8.0),
+                        ))
+                    : Text("Calculate BMI"),
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  await Future.delayed(Duration(seconds: 2));
+                  setState(() {
+                    isLoading = false;
+                  });
+                  isValid_input()
+                      ? {
+                          calculate_bmi(),
+                          await Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: result_screen(
+                                      bmiScore: bmiScore,
+                                      result: result,
+                                      msg: msg,
+                                      riskLevel: riskLevel)))
+                        }
+                      : {};
+                },
               ),
-              child: isLoading
-                  ? SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 3,
-                        padding: EdgeInsets.all(8.0),
-                      ))
-                  : Text("Calculate BMI"),
-              onPressed: () async {
-                setState(() {
-                  isLoading = true;
-                });
-                await Future.delayed(Duration(seconds: 2));
-                setState(() {
-                  isLoading = false;
-                });
-                isValid_input()
-                    ? {
-                        calculate_bmi(),
-                        await Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: result_screen(
-                                    bmiScore: bmiScore,
-                                    result: result,
-                                    msg: msg,
-                                    riskLevel: riskLevel)))
-                      }
-                    : {};
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  isValid_input() {
+  bool isValid_input() {
     errorMsg = "";
     if (!isValid()) {
       showDialog(
@@ -134,23 +142,25 @@ class _MyHomePageState extends State<MyHomePage> {
     return true;
   }
 
-  isValid() {
-    if (1 > age || age > 120) {
-      errorMsg = "> Please enter a valid age.\n";
-      return false;
+  bool isValid() {
+    errorMsg = "";
+    bool valid = true;
+    if (age < 1 || age > 120) {
+      errorMsg += "> Please enter a valid age.\n";
+      valid = false;
     }
     if (height <= 0) {
-      errorMsg = "> Please enter a valid height.\n";
-      return false;
+      errorMsg += "> Please enter a valid height.\n";
+      valid = false;
     }
     if (weight <= 0) {
-      errorMsg = "> Please enter a valid weight.\n";
-      return false;
+      errorMsg += "> Please enter a valid weight.\n";
+      valid = false;
     }
-    return true;
+    return valid;
   }
 
-  calculate_bmi() {
+  void calculate_bmi() {
     double l = ((height / 100) * (height / 100));
     bmiScore = weight / l;
     if (bmiScore < 18.5) {
@@ -158,16 +168,16 @@ class _MyHomePageState extends State<MyHomePage> {
       msg =
           "You need to gain some weight. \n(+ ${(18.5 * l - weight).toStringAsFixed(2)}kg)";
       riskLevel = 3;
-    } else if (bmiScore >= 18.5 && bmiScore < 24.9) {
+    } else if (bmiScore >= 18.5 && bmiScore <= 24.9) {
       result = "Normal weight";
       msg = "You are in a healthy weight range.";
       riskLevel = 0;
-    } else if (bmiScore >= 25 && bmiScore < 29.9) {
+    } else if (bmiScore > 24.9 && bmiScore <= 29.9) {
       result = "Overweight";
       msg =
           "You need to lose some weight. \n(- ${(weight - 24.9 * l).toStringAsFixed(2)}kg)";
       riskLevel = 2;
-    } else if (bmiScore >= 30) {
+    } else if (bmiScore > 29.9) {
       result = "Obesity";
       msg =
           "You need to lose a significant amount of weight. \n(- ${(weight - 24.9 * l).toStringAsFixed(2)}kg)";

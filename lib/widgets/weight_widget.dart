@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class weight_widget extends StatefulWidget {
+class WeightWidget extends StatefulWidget {
   final Function(double) onChange;
 
-  const weight_widget({
+  const WeightWidget({
     super.key,
     required this.onChange,
   });
 
   @override
-  State<weight_widget> createState() => _weight_widgetState();
+  State<WeightWidget> createState() => _HeightWidgetState();
 }
 
-class _weight_widgetState extends State<weight_widget> {
+class _HeightWidgetState extends State<WeightWidget> {
   double weight = 0;
+
+  void update(val) {
+    final p = double.tryParse(val);
+    if (p != null) {
+      setState(() {
+        weight = p;
+        widget.onChange(weight);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-          child: Card(
+      child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -37,7 +46,7 @@ class _weight_widgetState extends State<weight_widget> {
               ],
               decoration: InputDecoration(
                 counterText: "",
-                labelText: "Weight (kg)",
+                labelText: "weight (kg)",
                 labelStyle: TextStyle(
                   fontSize: 18,
                   color: Colors.grey,
@@ -50,17 +59,13 @@ class _weight_widgetState extends State<weight_widget> {
               ),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  weight = double.parse(value);
-                  widget.onChange(weight);
-                } else {
-                  weight = 0;
-                  widget.onChange(weight);
+                  update(value);
                 }
               },
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }

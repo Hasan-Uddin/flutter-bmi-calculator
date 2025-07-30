@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class height_widget extends StatefulWidget {
+class HeightWidget extends StatefulWidget {
   final Function(double) onChange;
 
-  const height_widget({
+  const HeightWidget({
     super.key,
     required this.onChange,
   });
 
   @override
-  State<height_widget> createState() => _height_widgetState();
+  State<HeightWidget> createState() => _HeightWidgetState();
 }
 
-class _height_widgetState extends State<height_widget> {
+class _HeightWidgetState extends State<HeightWidget> {
   double height = 0;
+
+  void update(val) {
+    final p = double.tryParse(val);
+    if (p != null) {
+      setState(() {
+        height = p;
+        widget.onChange(height);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-          child: Card(
+      child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -49,17 +58,13 @@ class _height_widgetState extends State<height_widget> {
               ),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  height = double.parse(value);
-                  widget.onChange(height);
-                } else {
-                  height = 0;
-                  widget.onChange(height);
+                  update(value);
                 }
               },
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }
