@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (bmiScore < 18.5) {
       result = "Underweight";
       msg =
-          "You need to gain some weight. (+ ${(18.5 * l - weight).toStringAsFixed(2)}kg)";
+          "You need to gain some weight. \n(+ ${(18.5 * l - weight).toStringAsFixed(2)}kg)";
       riskLevel = 3;
     } else if (bmiScore >= 18.5 && bmiScore < 24.9) {
       result = "Normal weight";
@@ -165,12 +165,12 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if (bmiScore >= 25 && bmiScore < 29.9) {
       result = "Overweight";
       msg =
-          "You need to lose some weight. (- ${(weight - 24.9 * l).toStringAsFixed(2)}kg)";
+          "You need to lose some weight. \n(- ${(weight - 24.9 * l).toStringAsFixed(2)}kg)";
       riskLevel = 2;
     } else if (bmiScore >= 30) {
       result = "Obesity";
       msg =
-          "You need to lose a significant amount of weight. (- ${(weight - 24.9 * l).toStringAsFixed(2)}kg)";
+          "You need to lose a significant amount of weight. \n(- ${(weight - 24.9 * l).toStringAsFixed(2)}kg)";
       riskLevel = 3;
     }
   }

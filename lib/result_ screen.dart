@@ -28,9 +28,9 @@ class result_screen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.98,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 child: Column(children: [
                   PrettyGauge(
                     gaugeSize: 300,
