@@ -6,6 +6,7 @@
 - How to build a Flutter app for both web and mobile platforms.
 - Managing state and UI in Flutter with widgets.
 - Managing callback functions
+- integrating 3rd party libraries.
 - Working with the Dart language and Flutter’s widget tree structure.
 - Using GitHub Actions to automate building and deploying Flutter web apps to GitHub Pages.
 ---
